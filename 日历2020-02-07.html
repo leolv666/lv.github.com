@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>日历2020-02-07</title>
+    <style>
+        .calendar{
+            width: 350px;
+            border: 1px solid skyblue;
+        }
+
+        .calendar .month{
+            /* width: 350px; */
+            border-bottom: 1px solid skyblue;
+            text-align: center;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .calendar .month .icon{
+            display:inline-block;
+            width: 5px;
+            height: 5px;
+            border-bottom: 1px solid skyblue;
+            border-right: 1px solid skyblue;
+            transform: rotate(45deg);
+            margin: 4px;
+
+        }
+        
+        .calendar .week{
+            display: flex; /* 父级week：弹性布局 */
+        }
+
+        .calendar .week .item{
+            flex: 1; /* 子级item：１表示等权重均分 */
+            text-align: center;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .calendar .day{
+            display: flex; /* 父级day：弹性布局 */
+            flex-flow: wrap;
+        }
+
+        .calendar .day > div{ /* 选择父级day元素的所有子级元素div */
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        .calendar .day .active{
+            background-color: skyblue;
+            border-radius: 100%;
+        }
+    
+    </style>
+</head>
+<body>
+    <!-- 日历结构总共分月、周、日三部分，首先建一个最大的div盒子，再分三个小盒子 -->
+    <div class="calendar">
+        <!-- Part1:月 -->
+        <div class="month">
+            <span>2020-02</span><span class="icon"></span>
+        </div>
+
+        <!-- Part2:周 -->
+        <div class="week">
+            <div class="item">日</div>
+            <div class="item">一</div>
+            <div class="item">二</div>
+            <div class="item">三</div>
+            <div class="item">四</div>
+            <div class="item">五</div>
+            <div class="item">六</div>
+        </div>
+
+        <!-- Part3:日 -->
+        <div class="day">
+            <!-- <div>27</div>
+            <div>28</div>
+            <div>29</div>
+            <div>30</div>
+            <div>1</div>
+            <div>2</div>
+            <div class="active">3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+            <div>11</div>
+            <div>12</div>
+            <div>14</div>
+            <div>15</div>
+            <div>16</div>
+            <div>17</div>
+            <div>19</div>
+            <div>20</div>
+            <div>21</div>
+            <div>22</div>
+            <div>23</div>
+            <div>24</div>
+            <div>25</div>
+            <div>26</div>
+            <div>27</div>
+            <div>28</div>
+            <div>29</div>
+            <div>30</div> -->
+        </div>
+    </div>
+
+    <script>
+        let now = new Date();　//获取当前具体日期
+
+        console.log(now.getFullYear()); //打印当前年
+        console.log(now.getMonth()+1); //打印当前月(月份循环是从0~11,所以需要+1)
+        console.log(now.getDate()); //打印当前日(1~31)
+        console.log(now.getDay()); //打印当前星期几(0~6)
+
+        //先获取2020-02当月第一天是星期几,再设置变量skip为跳过的星期数
+        let skip = new Date(2020,2-1,1).getDay();
+
+        //2020-02一共有多少天 3月的0号那一天就是2月最后一天
+        let max = new Date(2020,3-1,1-1).getDate();
+
+        console.log(max);
+
+        //设定变量i，循环要跳过的天数，从6~1
+        for (let i = skip; i > 0; i--){
+            // 获取day盒子里的数组元素，从下标第0个元素开始
+            document.getElementsByClassName("day")[0].innerHTML += "<div>?</div>";
+        }
+
+         //循环当月所有天数，最大天数为max，2月从1号循环到29号
+         for (let i = 1; i <= max; i++){
+             //判断日期是否为当天
+             let clazz=""; //clazz默认为空
+             if(i===now.getDate()){
+                 clazz = 'class="active"';
+             }
+
+            // 获取day盒子里所有的数组元素，从下标第0个元素开始，遍历全部天数
+            document.getElementsByClassName("day")[0].innerHTML += `<div ${clazz}>${i}</div>`;
+        }
+
+
+</script>
+    
+    
+</body>
+</html>
